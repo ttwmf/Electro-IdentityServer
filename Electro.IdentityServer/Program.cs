@@ -25,7 +25,9 @@ builder.Services.AddIdentityServer(options =>
     options.EmitStaticAudienceClaim = true;
 }).AddInMemoryIdentityResources(IdentityServerConfigs.IdentityResources)
 .AddInMemoryApiScopes(IdentityServerConfigs.ApiScopes)
-.AddInMemoryClients(IdentityServerConfigs.Clients).AddAspNetIdentity<ElectroUser>()
+.AddInMemoryClients(IdentityServerConfigs.Clients)
+.AddInMemoryApiResources(IdentityServerConfigs.ApiResources)
+.AddAspNetIdentity<ElectroUser>()
 .AddDeveloperSigningCredential().AddProfileService<ProfileService>();
 
 

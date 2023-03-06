@@ -21,10 +21,21 @@ namespace Electro.IdentityServer.Configurations
 
             new List<ApiScope>
             {
-                new ApiScope(name: "All", "All permissions"),
+                new ApiScope(name: "all", "All permissions"),
                 new ApiScope(name: "read",   displayName: "Read your data."),
                 new ApiScope(name: "write",  displayName: "Write your data."),
                 new ApiScope(name: "delete", displayName: "Delete your data.")
+            };
+
+        public static IEnumerable<ApiResource> ApiResources =>
+            new List<ApiResource>
+            {
+                new ApiResource("ElectroApi")
+                {
+                    Scopes = new List<string>{ "all", "read", "write", "delete"},
+                    ApiSecrets = new List<Secret> { new Secret("ScopeSecret".Sha256()) },
+                    UserClaims = new List<string> {"role"}
+                }
             };
 
         public static IEnumerable<Client> Clients =>
@@ -39,10 +50,10 @@ namespace Electro.IdentityServer.Configurations
                 },
                 new Client
                 {
-                    ClientId = "Electro",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientId = "ElectroMvcApp",
+                    ClientSecrets = { new Secret("5UOY6F46W4".Sha256()) },
                     AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes = { "magic",
+                    AllowedScopes = { "all",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
